@@ -10,7 +10,7 @@
     ],
     "repository": "https://github.com/ChisakiKai/Texas",
     "website": "https://t.me/TexasMirrorobot",
-    "success_url": "https://github.com/Satriouz/Texas",
+    "success_url": "https://github.com/ChisakiKai/Texas",
     "stack": "container",
     "env": {
       "ENV": {
