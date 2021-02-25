@@ -3,6 +3,7 @@ import re
 import threading
 import time
 
+from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot import download_dict, download_dict_lock
 
 LOGGER = logging.getLogger(__name__)
@@ -13,17 +14,17 @@ URL_REGEX = r"(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+"
 
 
 class MirrorStatus:
-    STATUS_UPLOADING = "Uploading...📤"
-    STATUS_DOWNLOADING = "Downloading...📥"
-    STATUS_WAITING = "Queued...📝"
-    STATUS_FAILED = "Failed 🚫. Cleaning download"
-    STATUS_CANCELLED = "Cancelled ❎"
-    STATUS_ARCHIVING = "Archiving...🔐"
-    STATUS_EXTRACTING = "Extracting...📂"
+    STATUS_UPLOADING = "Mengirim...⏫"
+    STATUS_DOWNLOADING = "Mengunduh...⏬"
+    STATUS_WAITING = "Antri dulu ya :)...📝"
+    STATUS_FAILED = "Gagal 🚫. Menghapus History"
+    STATUS_CANCELLED = "Batal ❎"
+    STATUS_ARCHIVING = "Meng Arsip...🔐"
+    STATUS_EXTRACTING = "Ekstrak file...📂"
 
 
 PROGRESS_MAX_SIZE = 100 // 8
-PROGRESS_INCOMPLETE = ['●', '●', '●', '●', '●', '●', '●']
+PROGRESS_INCOMPLETE = ['▰', '▰', '▰', '▰', '▰', '▰', '▰']
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
@@ -56,7 +57,7 @@ def get_readable_file_size(size_in_bytes) -> str:
     try:
         return f'{round(size_in_bytes, 2)}{SIZE_UNITS[index]}'
     except IndexError:
-        return 'File too large'
+        return 'File kegedean'
 
 
 def getDownloadByGid(gid):
@@ -80,10 +81,10 @@ def get_progress_bar_string(status):
     p = min(max(p, 0), 100)
     cFull = p // 8
     cPart = p % 8 - 1
-    p_str = '●' * cFull
+    p_str = '▰' * cFull
     if cPart >= 0:
         p_str += PROGRESS_INCOMPLETE[cPart]
-    p_str += '○' * (PROGRESS_MAX_SIZE - cFull)
+    p_str += '▱' * (PROGRESS_MAX_SIZE - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -92,23 +93,23 @@ def get_readable_message():
     with download_dict_lock:
         msg = ""
         for download in list(download_dict.values()):
-            msg += f"<b>Filename :</b> <code>{download.name()}</code>"
-            msg += f"\n<b>Status :</b> <i>{download.status()}</i>"
+            msg += f"<b>📂Nama File/Folder :</b> <code>{download.name()}</code>"
+            msg += f"\n<b>Status👨‍💻 :</b> <i>{download.status()}</i>"
             if download.status() != MirrorStatus.STATUS_ARCHIVING and download.status() != MirrorStatus.STATUS_EXTRACTING:
                 msg += f"\n<code>{get_progress_bar_string(download)} {download.progress()}</code>"
                 if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                    msg += f"\n<b>Downloaded :</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                    msg += f"\n<b>File yang Kedownload :</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
-                    msg += f"\n<b>Uploaded :</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>Speed :</b> {download.speed()}, \n<b>ETA:</b> {download.eta()} "
+                    msg += f"\n<b>File Yang diupload :</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                msg += f"\n<b>Kecepatan Internet⚡️:</b> {download.speed()}, \n<b>ETA ⏳:- </b> {download.eta()} "
                 # if hasattr(download, 'is_torrent'):
                 try:
-                    msg += f"\n<b>Info :- Seeders:</b> {download.aria_download().num_seeders}" \
+                    msg += f"\n<b>Info ⚓️ :- Seeders:</b> {download.aria_download().num_seeders}" \
                         f" & <b>Peers :</b> {download.aria_download().connections}"
                 except:
                     pass
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                msg += f"\n<b>GID</b>: <code>{download.gid()}</code>"
+                msg += f"\n<b>Biar Berhenti 👉 :</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>"                 
             msg += "\n\n"
         return msg
 
