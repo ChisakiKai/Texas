@@ -3,17 +3,6 @@
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://GitHub.com/Skuzzy_xD/)</br>
-
-
-![Python Version](https://img.shields.io/badge/python-3.9-green?style=for-the-badge&logo=appveyor)
-![Issues](https://img.shields.io/github/issues/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)
-![Forks](https://img.shields.io/github/forks/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)
-![Stars](https://img.shields.io/github/stars/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)
-![LICENSE](https://img.shields.io/github/license/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)
-![Contributors](https://img.shields.io/github/contributors/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)
-![Repository Size](https://img.shields.io/github/repo-size/ChisakiKai/Texas?style=for-the-badge&logo=appveyor)</br>
-
-
 [![Join Support!](https://img.shields.io/badge/Support%20Chat-ZeroUnion-red)](https://t.me/ZeroBotSupport) 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/602dd6a17da644da9112467bb4827ba4)](https://www.codacy.com/gh/ChisakiKai/Texas/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ChisakiKai/Texas&amp;utm_campaign=Badge_Grade)
 
